@@ -46,6 +46,18 @@
           </v-tab-item>
 
         </v-tabs>
+
+      <v-spacer></v-spacer> <v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer>
+           <v-btn 
+           color="red" 
+           dark
+           @click="denuncia = true"
+           >DENUNCIAR
+              <v-icon dark small right>block</v-icon>
+           </v-btn>
+
+      <v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer>
+
       </v-flex>
                 <v-flex xs12 sm4 text-xs-right>
         <!--  v-if="(categoria.length > 0 || buscador.length > 0) && (datoFecha.length > 0 && tiempoFecha.length > 0)"  --> 
@@ -187,6 +199,18 @@
               </v-btn>
             </v-snackbar>
     </v-layout>
+
+    <v-dialog v-model="denuncia" persistent>
+      <v-card>
+        <v-card-title class="headline"> ¿Usted realmente quiere denunciar a esta persona?</v-card-title>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="red darken-1"  @click="denuncia = false">Cancelar</v-btn>
+            <v-btn color="blue darken-1" @click="denuncia=false; enviarDenuncia()">Si, deseo denunciar</v-btn>
+          </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </v-container>
 </template>
 
@@ -197,6 +221,8 @@ import VerComentarios from "@/components/VerComentarios";
 import VerServicios from "@/components/VerServicios";
 import firebase from 'firebase'
 import fb from '@/api/firebaseConfig'
+import firebaseconfigobject from '@/api/firebaseConfig'
+
 
 export default {
   components: {
@@ -207,6 +233,7 @@ export default {
   },
   data: () => ({
     dialog: false,
+    denuncia: false,
     menuHs:false,
     menu2: false,
     datoFecha: new Date().toISOString().substr(0, 10),
@@ -240,7 +267,7 @@ export default {
   computed:{
       categoriaUser () {
         return this.$store.getters.categoria
-      }
+      },
 
   },
   methods: {
@@ -298,8 +325,19 @@ export default {
             this.snackbar.texto = 'Solicitud enviada!'
             this.snackbar.show = true
           })          
-      }
+      },
+      enviarDenuncia (){
+        console.log('Enviaste la denuncia...', this.user, this.trabajador);
+        firebaseconfigobject.db.ref('/denuncias').push({
+        id_trabajador_denunciado: this.trabajador.id_autentificacion, //es esto
+        nombre_trabajador_denunciado: this.trabajador.nombre,
+        apellido_trabajador_denunciado: this.trabajador.apellido,
+        id_cliente: this.user.uid,
+        nombre_cliente: this.user.displayName,
+      })
+    },
   },
+  
   mounted: function () {
     this.$store.dispatch('cargarTrabajadorFiltro', this.$route.params.id)
   },
@@ -310,7 +348,10 @@ export default {
     },
     trabajador () {
       return this.$store.getters.cargarTrabajadorFiltro
-    }
+    },
+     user () {
+        return this.$store.getters.user
+    },
   },
 };
 </script> 

@@ -93,7 +93,7 @@
           </v-list-tile-content>
         </v-list-tile>
 
-        <v-list-tile v-on:click="admin();drawer=false" v-if="user.displayName === 'Franco Truffa' || 'Mirco Fiocchi'">
+        <v-list-tile v-on:click="admin();drawer=false" v-if="user.displayName === 'Franco Truffa'">
           <v-list-tile-action>
             <v-icon  color="#01579B"  >fas fa-home</v-icon>
           </v-list-tile-action>
@@ -259,7 +259,7 @@ export default {
       }
     },
     admin(){
-      if (this.user.displayName == 'Franco Truffa') {
+      if (this.user.uid == 'b7YNiwK6ZGSYWurNK1MPnpz2DLq1') {
         this.$router.push('/Administrador')
       } else {
         this.$router.push('/Main')

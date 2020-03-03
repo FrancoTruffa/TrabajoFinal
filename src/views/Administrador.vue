@@ -52,24 +52,11 @@ export default {
   },
   data () {
     return {
-      trabajadores: '',
-      dialog:false,
-      clientes:'',
-      drawer: false,
-      navItems: nav.items,
-      userName: '',
-      loginType: localStorage.getItem('login_type'),
-      userId: localStorage.getItem('user_id'),
-      fbId: localStorage.getItem('fb_id'),
-      dateNow: this.getDateNow(),
-      leftDays: this.getLastDays(),
       mensaje:''
     }
   },
   watch: {
-    user: function (val) {
-      this.userName = val.displayName
-    }
+
   },
   computed: {
     isLogin () {
@@ -88,43 +75,12 @@ export default {
       return this.$store.getters.getPago
     }
   },
-  beforeCreate: function () {
-    if(!(this.$store.getters.user !== null && this.$store.getters.user !== undefined)){
-        this.$router.replace('login') 
-    }
-  },
+ 
   mounted: function () {
-    if(this.user) {
-      this.userName = this.user.displayName
-    }
-    if(this.categoria == 'trabajador'){
-      this.$store.dispatch('verificarPago', this.user.uid).then(result => {
-        if(!result){
-          this.$router.replace('/MercadoPago')
-        }
-      })
-    }
+    
   },
   methods: {
 
-    verperfil(){
-      this.$router.push('Main')
-    },
-    perfilUsuario(){
-      if (this.categoria == 'trabajador') {
-        this.$router.push('/PerfilTrabajador')
-      } else {
-        this.$router.push('/PerfilCliente')
-      }
-    },
-    admin(){
-      if (this.user.displayName == 'Franco Truffa') {
-        this.$router.push('/Administrador')
-      } else {
-        this.$router.push('/Main')
-      }
-      console.log('quiero ver que onda user: ',this.user)
-    },
 
     enviarMensaje(){
         console.log('Enviaste el mensaje...', this.mensaje);

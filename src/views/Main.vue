@@ -236,6 +236,17 @@
         <v-card-actions class="pa-3">
          <v-btn fab small dark color="blue darken-3"  :to="'/VerTrabajador/' + t.id_autentificacion "><i class="fas fa-eye"></i></v-btn>
           <v-spacer></v-spacer> <v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer>
+           <v-btn 
+           color="red" 
+           dark
+           @click="denuncia = true;
+           id_trabajador = t.id_autentificacion;
+           nom_trabajador_denunciado = t.nombre;
+           ape_trabajador_denunciado = t.apellido"
+           >DENUNCIAR
+              <v-icon dark small right>block</v-icon>
+           </v-btn>
+
           <v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer>
            <v-btn
            :disabled="!((datoFecha.length > 0 && tiempoFecha.length > 0) && (datoFecha >= date) ||  (tiempoFecha > horita && datoFecha === date)) " 
@@ -268,17 +279,35 @@
       </v-btn>
     </v-snackbar>
 </v-layout>
- </v-container>
+
+
+<v-dialog v-model="denuncia" persistent>
+  <v-card>
+     <v-card-title class="headline"> ¿Usted realmente quiere denunciar a esta persona?</v-card-title>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+          <v-btn color="red darken-1" @click="denuncia = false">Cancelar</v-btn>
+          <v-btn color="blue darken-1" @click="denuncia=false; enviarDenuncia();">Si, deseo denunciar</v-btn>
+      </v-card-actions>
+    </v-card>
+</v-dialog>
+
+</v-container>
+
+
 
 </template>
 
 <script>
 import firebase, { firestore } from 'firebase'
 import objetoFB from '@/api/firebaseConfig'
+import firebaseconfigobject from '@/api/firebaseConfig'
+
 export default {
 
   data: () => ({
    dialog: false,
+   denuncia: false,
    time:null,
    tiempoFecha:'',
    menu:false,
@@ -299,6 +328,8 @@ export default {
    comentario: '',
    buscador: '',
    id_trabajador: '',
+   nom_trabajador_denunciado: '',
+   ape_trabajador_denunciado: '',
    items: ['PLOMERO', 'ALBAÑIL', 'GASISTA', 'CARPINTERO', 'ELECTRICISTA', 'CERRAJERO', 'REFRIGERACION', 'DESGASTES', 'VIDRIERO'],
    snackbar: {
      show: false,
@@ -327,7 +358,13 @@ export default {
   computed:{
       categoriaUser () {
         return this.$store.getters.categoria
-      }
+      },
+      trabajadorcito () {
+      return this.$store.getters.cargarTrabajadorFiltro
+    },
+     user () {
+        return this.$store.getters.user
+    },
 
   },
   methods: {
@@ -391,7 +428,17 @@ export default {
             this.snackbar.texto = 'Solicitud enviada!'
             this.snackbar.show = true
           })          
-      }
+      },
+      enviarDenuncia (){
+        console.log('Enviaste la denuncia...', this.user, this.trabajadorcito);
+        firebaseconfigobject.db.ref('/denuncias').push({
+        id_trabajador_denunciado: this.id_trabajador, //es esto
+        nombre_trabajador_denunciado: this.nom_trabajador_denunciado,
+        apellido_trabajador_denunciado: this.ape_trabajador_denunciado,
+        id_cliente: this.user.uid,
+        nombre_cliente: this.user.displayName,
+      })
+    }
   },
   beforeCreate() {
     console.log('Esto trae dato fecha'+this.datoFecha)
