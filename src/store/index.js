@@ -4,6 +4,7 @@ import VuexPersist from 'vuex-persist'
 import cliente from './cliente'
 import user from './user'
 import trabajador from './trabajador'
+import denuncias from './denuncias'
 
 Vue.use(Vuex)
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     modules:{
         user,
         trabajador,
-        cliente
+        cliente,
+        denuncias
     }
 })
