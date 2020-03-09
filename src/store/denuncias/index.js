@@ -49,7 +49,19 @@ export default {
 
       cargarDenunciasFiltro ({commit}, payload) {
         commit('cargarDenunciasFiltro', payload)
-      }
+      },
+      generandolistadenuncias({commit}){
+        let self = this
+        let lista = []
+        var ref = firebaseconfigobject.db.ref('/denuncias');
+        ref.orderByChild('id_cliente').on("child_added", function(snapshot){
+          //console.log(snapshot.key + " WAS " + snapshot.val().apellido_trabajador_denunciado);
+          let dato = snapshot.val();//nuevo
+          lista.push(dato)//nuevo
+        });
+        console.log('probando lista', lista);
+         commit('resultadoLista',lista); //nuevo
+      },
     },
     mutations: { 
         setListaDenuncias(state, dato){
@@ -63,7 +75,10 @@ export default {
               )
             })
             
-          }
+          },
+        resultadoLista(state, dato){
+            state.listaDenuncias = dato
+        }
     },
     getters: {
         getListaDenuncias(state){
@@ -71,6 +86,6 @@ export default {
         },
         cargarDenunciasFiltro(state){
             return state.filtroDenuncias
-          }
+          },
     }
 }

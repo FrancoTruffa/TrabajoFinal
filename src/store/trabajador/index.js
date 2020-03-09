@@ -54,6 +54,16 @@ export default {
             borrarvistaTrabajador:"si"
         }) 
     },
+    cambiarEstadoTrabajador ({commit},payload) {
+      //firebase.database().ref('usuarios').equalTo(payload.id).update({
+      firebase.database().ref('usuarios').orderByChild("id_autentificacion").equalTo(payload.id).on("value", function(snapshot) {
+        let obj = snapshot.val()
+        let id = Object.keys(obj ||  { })
+        firebase.database().ref('usuarios').child(id[0]).update({
+          bloqueado: payload.estado
+        })
+      }) 
+  },
       aceptarTrabajo ({commit},payload) {
             let hoy = new Date()
             firebase.database().ref('notificaciones').child(payload.id).update({
