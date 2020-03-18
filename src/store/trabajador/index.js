@@ -17,7 +17,8 @@ export default {
         recomendacionBase:[],
         pago: false,
         numTareas: 0,
-        filtroTrabajador: null
+        filtroTrabajador: null,
+        datoTrabajadorEstado: [],
 
     },
     actions: {
@@ -64,6 +65,22 @@ export default {
         })
       }) 
   },
+  TraerTrabajadorActual({commit}, payload){
+    //var userT = firebase.auth().currentUser;//
+    let self = this;
+    let dato;
+    let datoTrabajadorEstado = [];//
+    console.log('payload: ', payload);
+    var ref = fbase.db.ref('/usuarios');
+    ref.orderByChild('id_autentificacion').on("child_added", function(snapshot){
+      if(payload.uid == snapshot.val().id_autentificacion){
+        dato = snapshot.val();
+        datoTrabajadorEstado.push(dato)
+        }
+    });
+    //this.datoTrabajadorEstado = datito;
+    commit('setTraerTrabajadorActual', datoTrabajadorEstado);
+    },
       aceptarTrabajo ({commit},payload) {
             let hoy = new Date()
             firebase.database().ref('notificaciones').child(payload.id).update({
@@ -300,6 +317,9 @@ export default {
         setCalidadPrecio(state, dato) {
           state.calidadPrecioBase = dato
         },
+        setTraerTrabajadorActual(state, dato){
+          state.datoTrabajadorEstado = dato
+        },
         setCalidadTrabajo(state, dato) {
           state.calidadTrabajoBase = dato
         },
@@ -329,6 +349,9 @@ export default {
     getters: {
         getPago(state){
           return state.pago
+        },
+        getTrabajadorActual(state){
+          return state.datoTrabajadorEstado
         },
         getCalidadPrecio (state) {
           return state.calidadPrecioBase

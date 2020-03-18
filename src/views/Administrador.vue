@@ -1,34 +1,3 @@
-<!--<template>
-    <v-container align-center fluid style="background-color:#012c4f">
-        <v-layout align-center justify-center>
-            <v-flex pt-5 xs12 md4>
-                <v-card>
-                    <v-card-text>
-                        <div class="text-xs-right">
-                            <v-chip>
-                                <v-avatar>
-                                    <img :src="user.photoURL">
-                                </v-avatar>
-                                mensaje de chat 
-                            </v-chip>
-                        </div>
-                    </v-card-text>
-
-                    <v-card-text>
-                        <v-form @submit.prevent="enviarMensaje">
-                            <v-text-field v-model="mensaje" label="escribe tu mensaje aqui"></v-text-field>
-                        </v-form>
-                        <v-btn @click="listaDenuncias2">
-                          PRUEBA DENUNCIAS
-                        </v-btn>
-                    </v-card-text>
-
-                </v-card>
-            </v-flex>
-        </v-layout>
-    </v-container>
-</template>-->
-
 <template>
   <v-container>
     <v-layout row wrap>
@@ -60,11 +29,35 @@
           </v-card-text>
         </v-card>
       </v-flex>
+      
+      <v-flex xs12 pt-5 v-if="obtenerPagos">
+        <!--<v-btn>LISTA DE PAGOS</v-btn>-->
+        PAGOS
+
+        
+      </v-flex>
+
+<v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer>
+<v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer>
+
+        <v-expansion-panel>
+          
+          <v-expansion-panel-content
+          v-for="mes in meses" :key="mes.id"
+          >
+            <template v-slot:header>
+              <div>{{ mes.nombre }}</div>
+            </template>
+            <v-card v-for="(pagos, index) in obtenerPagos" :key="index">
+              <v-card-text v-if="pagos.fecha.substring(5,7) === String(mes.id) || pagos.fecha.substring(5,6) === String(mes.id)"> Nro Comprobante: {{pagos.comprobante}} - Año: {{pagos.fecha.substring(0,4)}}  </v-card-text>
+            </v-card>
+          </v-expansion-panel-content> 
+
+        </v-expansion-panel>
+
     </v-layout>
   </v-container>
 </template>
-  
-
 
 <script>
 import nav from '../_nav'
@@ -81,7 +74,58 @@ export default {
     return {
       mensaje:'',
       denunciastotales: firebaseconfigobject.db.ref('/denuncias'),
-      lista: ''
+      lista: '',
+      meses: [
+        {
+          id: 1,
+          nombre: 'Enero'
+        },
+        {
+          id: 2,
+          nombre: 'Febrero'
+        },
+        {
+          id: 3,
+          nombre: 'Marzo'
+        },
+        {
+          id: 4,
+          nombre: 'Abril'
+        },
+        {
+          id: 5,
+          nombre: 'Mayo'
+        },
+        {
+          id: 6,
+          nombre: 'Junio'
+        },
+        {
+          id: 7,
+          nombre: 'Julio'
+        },
+        {
+          id: 8,
+          nombre: 'Agosto'
+        },
+        {
+          id: 9,
+          nombre: 'Septiembre'
+        },
+        {
+          id: 10,
+          nombre: 'Octubre'
+        },
+        {
+          id: 11,
+          nombre: 'Noviembre'
+        },
+        {
+          id: 12,
+          nombre: 'Diciembre'
+        }
+        
+      ]
     }
   },
   watch: {
@@ -99,24 +143,24 @@ export default {
     obtenerLista(){
       return this.$store.getters.getListaDenuncias
     },
-    
-  generandolistadenuncias(){
-    let self = this
-    let lista = []
-    var ref = firebaseconfigobject.db.ref('/denuncias');
-    ref.orderByChild('id_cliente').on("child_added", function(snapshot){
-      //console.log(snapshot.key + " WAS " + snapshot.val().apellido_trabajador_denunciado);
-      let dato = snapshot.val();//nuevo
-      lista.push(dato)//nuevo
-    });
-    return lista; //nuevo
-  },
+
+    obtenerPagos(){
+      return this.$store.getters.getListaPagos
+    },
+
+    obtenerMes(){
+      return this.$$store.getters.getListaPagos.fecha
+    },
+    obtenerContador(){
+      return this.$store.getters.getContadorMesDic
+    },
   
   },
  
   mounted: function () {
 
     this.$store.dispatch('generandolistadenuncias')
+    this.$store.dispatch('obteniendoPagos')
   },
   methods: {
 
@@ -143,17 +187,32 @@ export default {
     })
   },
 
-  listaDenuncias2(){
-    console.log(this.$store.getters.getListaDenuncias);
-    console.log(this.$store.getters.cargarDenunciasFiltro);
-    console.log('Enviaste la denuncia...', this.administradorcito);
-    console.log('usuario',this.user);
-    console.log('viendo la lista',this.generandolistadenuncias);
-    console.log('a ver si anda el store', this.obtenerLista)
-  },
-  mostrarDenuncias(){
+  obteniendoPagos(){
+    let self = this
+    let listaPagos = []
+    var ref = fbase.db.ref('/pagos_trabajadores');
+    ref.orderByChild('id_trabajadores').on("child_added", function(snapshot){
+      //console.log(snapshot.key + " WAS " + snapshot.val().apellido_trabajador_denunciado);
+      let dato = snapshot.val();//nuevo
+      listaPagos.push(dato)//nuevo
+    });
     
-  }
+    return listaPagos;
+    //console.log("a ver los pagos: ", listaPagos);
+  },
+  /*obteniendoMesPagos(){
+        let self = this
+        let listaPagos = []
+        var ref = fbase.db.ref('/pagos_trabajadores');
+        ref.orderByChild('id_trabajadores').on("child_added", function(snapshot){
+          //console.log(snapshot.key + " WAS " + snapshot.val().apellido_trabajador_denunciado);
+          let fechita = snapshot.val().fecha.substring(5,7);//nuevo
+          listaPagos.push(fechita)//nuevo
+        });
+        //return listaPagos;
+        console.log("a ver las fechitas breeeeo: ", listaPagos);
+        //commit('resultadoListaPagos', listaPagos);
+      },*/
 }
 }
 

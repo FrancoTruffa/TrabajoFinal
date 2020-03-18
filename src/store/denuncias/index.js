@@ -7,6 +7,8 @@ export default {
     state: {
         listaDenuncias: [],
         filtroDenuncias: '',
+        listaPagos: [],
+        contadorcito: 0
         //lista: []
     },
     actions: {
@@ -62,6 +64,25 @@ export default {
         console.log('probando lista', lista);
          commit('resultadoLista',lista); //nuevo
       },
+      obteniendoPagos({commit}){
+        let self = this
+        let listaPagos = []
+        let objDic = []
+        let objOct = []
+        let objMar = []
+        var ref = fbase.db.ref('/pagos_trabajadores');
+        ref.orderByChild('id_trabajadores').on("child_added", function(snapshot){
+          //console.log(snapshot.key + " WAS " + snapshot.val().apellido_trabajador_denunciado);
+          let dato = snapshot.val();//nuevo
+          listaPagos.push(dato)//nuevo
+        });
+        //return listaPagos;
+        //objContar.push(objContar2)
+        console.log("a ver los pagos: ", listaPagos);
+        console.log("A VER EL CONTADOR: ", objDic);
+        commit('resultadoListaPagos', listaPagos);
+        commit('contadorMesDic', objDic)
+      }
     },
     mutations: { 
         setListaDenuncias(state, dato){
@@ -78,11 +99,24 @@ export default {
           },
         resultadoLista(state, dato){
             state.listaDenuncias = dato
+        },
+        resultadoListaPagos(state, dato){
+          state.listaPagos = dato
+        },
+        contadorMesDic(state, dato){
+          state.contadorcito = dato
         }
+
     },
     getters: {
         getListaDenuncias(state){
             return state.listaDenuncias
+        },
+        getListaPagos(state){
+          return state.listaPagos
+        },
+        getContadorMesDic(state){ 
+          return state.contadorcito 
         },
         cargarDenunciasFiltro(state){
             return state.filtroDenuncias
