@@ -33,8 +33,6 @@
       <v-flex xs12 pt-5 v-if="obtenerPagos">
         <!--<v-btn>LISTA DE PAGOS</v-btn>-->
         PAGOS
-
-        
       </v-flex>
 
 <v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer>
