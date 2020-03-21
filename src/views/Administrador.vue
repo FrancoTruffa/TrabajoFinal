@@ -17,7 +17,7 @@
            >BLOQUEAR
            </v-btn>
            <v-btn 
-           color="red" 
+           color="green" 
            dark
            small
            @click="$store.dispatch('cambiarEstadoTrabajador', {
@@ -65,6 +65,7 @@ import firebase, { firestore } from 'firebase'
 import objetoFB from '@/api/firebaseConfig'
 import fbase from '@/api/firebaseConfig.js'
 import firebaseconfigobject from '@/api/firebaseConfig'
+//import Vuetify from 'vuetify'
 
 export default {
   name: 'DefaultLayout',
