@@ -1,6 +1,6 @@
 <template>
   <v-container fluid style="background-color:#012c4f">
- <v-layout row wrap v-if="!loading">
+ <v-layout row wrap v-if="!loading && (trabajadorcito[0].bloqueado == false || trabajadorcito[0].bloqueado == null)">
 
  <v-flex xs12 pt-5 >
           <h3>Trabajos solicitados</h3>
@@ -321,6 +321,53 @@
           </v-snackbar>
           
  </v-layout>
+
+<v-layout row wrap v-if="trabajadorcito[0].bloqueado == true"> <!--    <v-layout v-else>-->
+  <v-flex xs12 pt-5>
+    <v-alert
+      :value="true"
+      color="error"
+      icon="warning"
+      outline
+      style="text-align: center"
+    >
+        USTED HA SIDO BLOQUEADO
+    </v-alert>
+    
+  <br><br><br><br><br>
+
+
+  <v-card
+    class="mx-auto"
+    max-width="600"  
+  >
+    <v-card-title>
+      <span class="title font-weight-light" style="color: #FAFAFA" >Por favor, enviar un mail a la Administración: </span>
+      <br><br>
+      <span class="title font-weight" style="color: #FAFAFA">cordobaservice.cba@gmail.com</span>
+    </v-card-title>
+
+    <v-card-actions>
+      <v-list-tile class="grow">
+        <v-list-tile-avatar color="grey darken-3">
+          <!--<v-img
+            class="elevation-6"
+            src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+          ></v-img>-->
+        <i class="fas fa-tools"></i>
+        </v-list-tile-avatar>
+
+        <v-list-tile-content>
+          <v-list-tile-title>Administración Córdoba Service</v-list-tile-title>
+        </v-list-tile-content>
+
+      </v-list-tile>
+    </v-card-actions>
+  </v-card>
+
+  </v-flex>
+</v-layout>
+
  <v-dialog
             v-model="loading"
             hide-overlay
@@ -398,10 +445,19 @@ export default {
       },
       finalizadas () {
         return this.$store.getters.getNotificacionesFinalizadas
-      }
+      },
+      user () {
+        return this.$store.getters.user
+      },
+      trabajadorcito () {
+         return this.$store.getters.getTrabajadorActual
+    },
     },
     mounted: function() {
-       this.cargaNotificaciones()
+      this.cargaNotificaciones();
+      this.$store.dispatch('TraerTrabajadorActual', this.user);
+      console.log("quiero ver trabajadorcitoooo: ", trabajadorcito);
+
     },
     methods: {
       VerUbicacion(dir){

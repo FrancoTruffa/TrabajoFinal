@@ -7,8 +7,54 @@
     </v-layout>
     <v-layout v-else> <!--    <v-layout v-else>-->
       <v-flex xs12 pt-5>
-      SU CUENTA ESTA BLOQUEADA, POR FAVOR COMUNIQUESE CON NOSOTROS ENVIANDO UN MAIL A LA ADMINISTRACION: 
-      cordobaservice.cba@gmail.com
+       <!-- <v-alert
+          :value="true"
+          color="error"
+          icon="warning"
+          outline
+        >
+        ALERTA
+    </v-alert>-->
+    <v-spacer></v-spacer>
+    <br><br><br><br>
+
+  <v-card
+    class="mx-auto"
+    max-width="600"
+    
+  >
+    <v-card-title>
+      <span class="title font-weight-light" style="color: #FAFAFA">SU CUENTA HA SIDO BLOQUEADA</span>
+    </v-card-title>
+
+    <v-card-text class="headline font-weight-bold">
+      Por favor, enviar un mail a la administracion:
+      <a style="color:#E57373">cordobaservice.cba
+        @gmail.com</a>
+    </v-card-text>
+    
+
+    <v-card-actions>
+      <v-list-tile class="grow">
+        <v-list-tile-avatar color="grey darken-3">
+          <!--<v-img
+            class="elevation-6"
+            src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+          ></v-img>-->
+        <i class="fas fa-tools"></i>
+        </v-list-tile-avatar>
+
+        <v-list-tile-content>
+          <v-list-tile-title>Administración Córdoba Service</v-list-tile-title>
+        </v-list-tile-content>
+
+      </v-list-tile>
+    </v-card-actions>
+  </v-card>
+
+
+
+
       </v-flex>
     </v-layout>
  </v-container>

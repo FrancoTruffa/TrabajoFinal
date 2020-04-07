@@ -48,6 +48,7 @@
         </v-tabs>
 
       <v-spacer></v-spacer> <v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer>
+           
            <v-btn 
            color="red" 
            dark
@@ -56,12 +57,9 @@
               <v-icon dark small right>block</v-icon>
            </v-btn>
 
-      <v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer>
+          <v-btn  x-large dark rounded rigth color="green darken-3"  @click="dialog = true" >Solicitar</v-btn>
 
-      </v-flex>
-                <v-flex xs12 sm4 text-xs-right>
-        <!--  v-if="(categoria.length > 0 || buscador.length > 0) && (datoFecha.length > 0 && tiempoFecha.length > 0)"  --> 
-         <v-btn  x-large dark rounded rigth color="green darken-3"  @click="dialog = true" >Solicitar</v-btn>
+      <v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer>
 
       </v-flex>
 

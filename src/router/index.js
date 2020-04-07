@@ -27,6 +27,7 @@ import Disponibilidad from '@/views/Disponibilidad'
 import MercadoPago from '@/views/MercadoPago'
 import Transaccion from '@/views/Transaccion'
 import Administrador from '@/views/Administrador'
+import Denunciarcomentario from '@/views/Denunciarcomentario'
 
 
 Vue.use(Router)
@@ -279,6 +280,21 @@ const router  = new Router({
         }
       ]
     },
+
+    {
+      path: '/',
+      redirect: '/Denunciarcomentario',
+      name: 'Denunciarcomentario',
+      component: DefaultLayout,
+      children: [
+        {
+          path: 'denunciarcomentario',
+          name: 'Denunciarcomentario',
+          component: Denunciarcomentario
+        }
+      ]
+    },
+
     {
       path: '/',
       redirect: '/Administrador',

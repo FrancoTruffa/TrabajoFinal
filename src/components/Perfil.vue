@@ -31,12 +31,13 @@
 
             <v-list-tile-content>
               <v-list-tile-title>{{nombre}} {{apellido}}</v-list-tile-title>
-              <v-list-tile-sub-title>Nombre Perfil</v-list-tile-sub-title>
+              <v-list-tile-sub-title>Nombre</v-list-tile-sub-title>
             </v-list-tile-content>
-
- 
           </v-list-tile>
+
+
           <v-divider inset></v-divider>
+
           <v-list-tile >
             <v-list-tile-action>
               <v-icon color="indigo">phone</v-icon>
@@ -46,7 +47,6 @@
               <v-list-tile-title>{{telefono}}</v-list-tile-title>
               <v-list-tile-sub-title>Celular</v-list-tile-sub-title>
             </v-list-tile-content>
-
           </v-list-tile>
 
           <v-divider inset></v-divider>

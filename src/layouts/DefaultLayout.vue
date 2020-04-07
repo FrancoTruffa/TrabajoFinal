@@ -102,6 +102,15 @@
           </v-list-tile-content>
         </v-list-tile>
 
+        <v-list-tile v-on:click="denunciarComentario();drawer=false" v-if="categoria === 'trabajador' || categoria === 'Trabajador'">
+          <v-list-tile-action>
+            <v-icon color="#01579B">fas fa-times-circle</v-icon> 
+          </v-list-tile-action>
+          <v-list-tile-content class="white--text">
+            <v-list-tile-title>Denunciar Comentario</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
         <v-divider class="my-2" my-5></v-divider>
         <v-list-tile @click="dialog = true;" ><!-- :to="'/Logout/'"-->
           <v-list-tile-action>
@@ -265,6 +274,10 @@ export default {
         this.$router.push('/Main')
       }
       console.log('quiero ver que onda user: ',this.user)
+      console.log('CATEGORIA TRAE LO QUE YO CREO QUE TRAE?????????????????? ', this.categoria)
+    },
+    denunciarComentario(){
+        this.$router.push('/Denunciarcomentario')
     },
     disponibilidad(){
       if (this.categoria == 'trabajador') {

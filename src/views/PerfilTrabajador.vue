@@ -1,12 +1,13 @@
 <template>
-  <v-container  style="background-color:#012c4f">
+  <v-container fluid style="background-color:#012c4f">
     <v-layout row wrap >
-      <v-flex pt-5 v-if="trabajador.length > 0" xs12>
-        <perfil :telefono="trabajador[0].telefono" :nombre="trabajador[0].nombre" :apellido="trabajador[0].apellido" :email="trabajador[0].email" :domicilio="trabajador[0].domicilio " :foto="trabajador[0].foto "></perfil>
+      <v-flex pt-5 sm4 xs12 v-if="trabajadorcito.length > 0">
+        <perfil :telefono="trabajadorcito[0].telefono" :nombre="trabajadorcito[0].nombre" :apellido="trabajadorcito[0].apellido" 
+        :email="trabajadorcito[0].email" :domicilio="trabajadorcito[0].domicilio " :foto="trabajadorcito[0].foto "></perfil>
       </v-flex>
     </v-layout>
-                      <v-dialog 
-                v-if="trabajador.length === 0"
+              <v-dialog 
+                v-if="trabajadorcito.length === 0"
                 v-model="loading"
                 hide-overlay
                 persistent
@@ -41,11 +42,20 @@ export default {
     trabajador: '',
     loading: true,
   }),
+  
+  computed:{
+    trabajadorcito () {
+         return this.$store.getters.getTrabajadorActual
+    },
+  },
 
   mounted: function () {
     this.$store.dispatch('mostrarTrabajador').then(result => {
       this.trabajador = this.$store.getters.cargarTrabajadorFiltro(this.$store.getters.user.uid)
     })
+    console.log('mostrame el trabajador rey de reyes: ', this.trabajdor);
+    console.log('mostrame el TRABAJADORCITO RETYYY: ', this.trabajadorcito[0]);
+      
     
   }
 };
