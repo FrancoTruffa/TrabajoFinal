@@ -6,6 +6,7 @@ import * as firebase from 'firebase'
 export default {
     state: {
         listaDenuncias: [],
+        listaDenunciasTrabajadores: [],
         filtroDenuncias: '',
         listaPagos: [],
         contadorcito: 0
@@ -13,18 +14,6 @@ export default {
     },
     actions: {
       CargarDenuncias({commit}){
-        /*return new Promise((resolve, reject) => {
-            let self = this
-            let lista = []
-            fbase.db.ref('/denuncias').on("value", function(snapshot) {
-              snapshot.forEach(function(childSnapshot){
-                let dato = childSnapshot.val();
-                lista.push(dato)
-              }); 
-              commit('setListaDenuncias', lista)
-              resolve('ok')
-            })
-          })*/
           return new Promise((resolve, reject) => {
             let self = this
             let lista = []
@@ -37,17 +26,22 @@ export default {
               resolve('ok')
             })
           })
-        /*firebase.database().ref('/denuncias').get().then(snapchot => {
-            snapchot.forEach(doc =>{
-                let dato = doc.val()
-                console.log("chequeando esto",dato)
-                //console.log(doc.id_cliente)
-                //console.log(doc.id_trabajador_denunciado)
-                listaDenuncias.push(dato)
-                commits('setListaDenuncias', listaDenuncias)
-            })
-        })*/
       },
+
+      CargarDenunciasTrabajadores({commit}){
+        return new Promise((resolve, reject) => {
+          let self = this
+          let lista = []
+          firebaseconfigobject.db.ref('/denunciasTrabajador').get().then(snapshot => {
+              snapshot.forEach(doc =>{
+              let dato = doc.data();
+              lista.push(dato)
+            }); 
+            commit('setListaDenunciasTrabajadores', lista)
+            resolve('ok')
+          })
+        })
+    },
 
       cargarDenunciasFiltro ({commit}, payload) {
         commit('cargarDenunciasFiltro', payload)
@@ -63,6 +57,18 @@ export default {
         });
         console.log('probando lista', lista);
          commit('resultadoLista',lista); //nuevo
+      },
+      generandolistadenunciasTrabajadores({commit}){
+        let self = this
+        let lista = []
+        var ref = firebaseconfigobject.db.ref('/denunciasTrabajador');
+        ref.orderByChild('id_trabajador').on("child_added", function(snapshot){
+          //console.log(snapshot.key + " WAS " + snapshot.val().apellido_trabajador_denunciado);
+          let dato = snapshot.val();//nuevo
+          lista.push(dato)//nuevo
+        });
+        console.log('MOSTRAME ESTO: ', lista);
+         commit('resultadoListaTrabajadores',lista); //nuevo
       },
       obteniendoPagos({commit}){
         let self = this
@@ -88,6 +94,9 @@ export default {
         setListaDenuncias(state, dato){
             state.listaDenuncias = dato
         },
+        setListaDenunciasTrabajadores(state, dato){ 
+          state.listaDenunciasTrabajadores = dato 
+        },
         cargarDenunciasFiltro(state, payload) {
           
             state.filtroDenuncias = state.listaDenuncias.filter(item =>{
@@ -100,6 +109,9 @@ export default {
         resultadoLista(state, dato){
             state.listaDenuncias = dato
         },
+        resultadoListaTrabajadores(state, dato){
+          state.listaDenunciasTrabajadores = dato
+      },
         resultadoListaPagos(state, dato){
           state.listaPagos = dato
         },
@@ -111,6 +123,9 @@ export default {
     getters: {
         getListaDenuncias(state){
             return state.listaDenuncias
+        },
+        getListaDenunciasTrabajadores(state){
+          return state.listaDenunciasTrabajadores
         },
         getListaPagos(state){
           return state.listaPagos

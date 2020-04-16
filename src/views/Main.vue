@@ -1,6 +1,6 @@
 <template>
   <v-container fluid style="background-color:#012c4f">
-    <v-layout row wrap>
+    <v-layout row wrap v-if="usuarioActual[0].bloqueado == false || usuarioActual[0].bloqueado == null">
     <div class="text-xs-center">
     <v-dialog
       v-model="dialog"
@@ -210,7 +210,7 @@
       
     </v-layout>
     
-      <v-layout  v-show="!hidden" wrap column >
+      <v-layout  v-show="!hidden" wrap column v-if="usuarioActual[0].bloqueado == false || usuarioActual[0].bloqueado == null">
        <v-flex class="mb-2" sm6 justify-space-between  v-for="t in trabajadores" :key="t.id">
          <v-card color="blue-grey darken-4" dark  >
            <v-layout >
@@ -278,6 +278,51 @@
         Cerrar
       </v-btn>
     </v-snackbar>
+</v-layout>
+
+<v-layout v-if="usuarioActual[0].bloqueado == true">
+        <v-flex xs12 pt-5>
+    <v-spacer></v-spacer>
+    <br><br><br><br>
+
+  <v-card
+    class="mx-auto"
+    max-width="600"
+    
+  >
+    <v-card-title>
+      <span class="title font-weight-light" style="color: #FAFAFA">SU CUENTA HA SIDO BLOQUEADA</span>
+    </v-card-title>
+
+    <v-card-text class="headline font-weight-bold">
+      Por favor, enviar un mail a la administracion:
+      <a style="color:#E57373">cordobaservice.cba
+        @gmail.com</a>
+    </v-card-text>
+    
+
+    <v-card-actions>
+      <v-list-tile class="grow">
+        <v-list-tile-avatar color="grey darken-3">
+          <!--<v-img
+            class="elevation-6"
+            src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+          ></v-img>-->
+        <i class="fas fa-tools"></i>
+        </v-list-tile-avatar>
+
+        <v-list-tile-content>
+          <v-list-tile-title>Administración Córdoba Service</v-list-tile-title>
+        </v-list-tile-content>
+
+      </v-list-tile>
+    </v-card-actions>
+  </v-card>
+
+
+
+
+      </v-flex>
 </v-layout>
 
 
@@ -365,6 +410,9 @@ export default {
      user () {
         return this.$store.getters.user
     },
+    usuarioActual(){
+      return this.$store.getters.getTrabajadorActual
+    }
 
   },
   methods: {
@@ -452,7 +500,9 @@ export default {
     console.log("Que onda perri: ", this.user)
   },
   mounted () {
-    
+    console.log("mostrameeee", this.user)
+    this.$store.dispatch('TraerTrabajadorActual', this.user)
+    console.log('A VER SI ME TRAE DATO DEL USUARIO ENTERO: ', this.usuarioActual)
   }
 }
 </script>

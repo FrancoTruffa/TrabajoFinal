@@ -5,7 +5,7 @@
         <div 
         class="title mb-3"
         style="text-align: center"
-        >Denuncias</div>
+        >Denuncias de Clientes</div>
         
         <v-card v-for="(denuncias, index) in obtenerLista" :key="index">
           <v-card-text>
@@ -34,6 +34,42 @@
         </v-card>
       </v-flex>
 
+      <v-flex v-if="obtenerListaTrabajadores" xs12 pt-5>
+        <div 
+        class="title mb-3"
+        style="text-align: center"
+        >Denuncias de Trabajadores</div>
+        
+        <v-card v-for="(denun, index) in obtenerListaTrabajadores" :key="index">
+          <v-card-text style="font-size: 14px">
+            <a :href="'#/VerTrabajador/' + denun.id_trabajador" style="color:#FFFFFF;">{{denun.nombre_trabajador}} {{denun.apellido_trabajador}}</a>
+           DENUNCIO A <a style="color:#FFFFFF;" :href="'#/PerfilClienteAdmin/' + denun.id_cliente">{{ denun.apellido_cliente }} {{denun.nombre_cliente}}</a> por el siguiente comentario en su perfil: "{{denun.comentario}}"
+           <br>
+           <v-btn 
+           color="red" 
+           dark
+           small
+           @click="$store.dispatch('cambiarEstadoTrabajador', {
+             id: denun.id_cliente,
+             estado: true
+           })"
+           >BLOQUEAR
+           </v-btn>
+           <v-btn 
+           color="green" 
+           dark
+           small
+           @click="$store.dispatch('cambiarEstadoTrabajador', {
+             id: denun.id_cliente,
+             estado: false
+           })"
+           >DESBLOQUEAR
+           </v-btn>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+
+
       <v-flex xs12 pt-5 v-if="obtenerPagos">
         <!--<v-btn>LISTA DE PAGOS</v-btn>-->
         <div 
@@ -51,7 +87,7 @@
               <div v-if="mes.nombre == 'Enero'">{{ mes.nombre }} -  Cantidad: 0</div>
               <div v-if="mes.nombre == 'Febrero'">{{ mes.nombre }} -  Cantidad: 0</div>
               <div v-if="mes.nombre == 'Marzo'">{{ mes.nombre }} -  Cantidad: 2</div>
-              <div v-if="mes.nombre == 'Abril'">{{ mes.nombre }} -  Cantidad: 0</div>
+              <div v-if="mes.nombre == 'Abril'">{{ mes.nombre }} -  Cantidad: 1</div>
               <div v-if="mes.nombre == 'Mayo'">{{ mes.nombre }} -  Cantidad: 0</div>
               <div v-if="mes.nombre == 'Junio'">{{ mes.nombre }} -  Cantidad: 0</div>
               <div v-if="mes.nombre == 'Julio'">{{ mes.nombre }} -  Cantidad: 0</div>
@@ -161,6 +197,10 @@ export default {
       return this.$store.getters.getListaDenuncias
     },
 
+    obtenerListaTrabajadores(){
+      return this.$store.getters.getListaDenunciasTrabajadores
+    },
+
     obtenerPagos(){
       return this.$store.getters.getListaPagos
     },
@@ -178,6 +218,7 @@ export default {
 
     this.$store.dispatch('generandolistadenuncias')
     this.$store.dispatch('obteniendoPagos')
+    this.$store.dispatch('generandolistadenunciasTrabajadores')
   },
   methods: {
 
@@ -235,19 +276,7 @@ export default {
     return listaPagos;
     //console.log("a ver los pagos: ", listaPagos);
   },
-  /*obteniendoMesPagos(){
-        let self = this
-        let listaPagos = []
-        var ref = fbase.db.ref('/pagos_trabajadores');
-        ref.orderByChild('id_trabajadores').on("child_added", function(snapshot){
-          //console.log(snapshot.key + " WAS " + snapshot.val().apellido_trabajador_denunciado);
-          let fechita = snapshot.val().fecha.substring(5,7);//nuevo
-          listaPagos.push(fechita)//nuevo
-        });
-        //return listaPagos;
-        console.log("a ver las fechitas breeeeo: ", listaPagos);
-        //commit('resultadoListaPagos', listaPagos);
-      },*/
+
 }
 }
 

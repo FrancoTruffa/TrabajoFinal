@@ -75,12 +75,21 @@
 
         <v-divider class="my-2" my-5></v-divider>
 
-        <v-list-tile v-on:click="perfilUsuario();drawer=false" ><!-- :to="'/PerfilTrabajador/' + user.uid " -->
+        <v-list-tile v-on:click="perfilUsuario();drawer=false" v-if="categoria === 'cliente' || categoria === 'Cliente'"><!-- :to="'/PerfilTrabajador/' + user.uid " -->
           <v-list-tile-action>
             <v-icon  color="#01579B">fas fa-user</v-icon>
           </v-list-tile-action>
           <v-list-tile-content class="white--text">
             <v-list-tile-title>Perfil</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
+        <v-list-tile v-on:click="perfilUsuarioPrueba();drawer=false" v-if="categoria === 'trabajador' || categoria === 'Trabajador'"><!-- :to="'/PerfilTrabajador/' + user.uid " -->
+          <v-list-tile-action>
+            <v-icon  color="#01579B">fas fa-user</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content class="white--text">
+            <v-list-tile-title>Perfil Trabajador</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
 
@@ -258,6 +267,11 @@ export default {
         this.$router.push('/PerfilTrabajador')
       } else {
         this.$router.push('/PerfilCliente')
+      }
+    },
+    perfilUsuarioPrueba(){
+      if (this.categoria == 'trabajador') {
+        this.$router.push('/PerfilTrabajadorPrueba/')
       }
     },
     home(){

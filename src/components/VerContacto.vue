@@ -5,7 +5,7 @@
         <v-img
           
           :src="foto"
-          height="600px"
+          height="350px"
         >
           <v-layout
             column

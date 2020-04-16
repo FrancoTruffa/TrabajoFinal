@@ -7,14 +7,6 @@
     </v-layout>
     <v-layout v-else> <!--    <v-layout v-else>-->
       <v-flex xs12 pt-5>
-       <!-- <v-alert
-          :value="true"
-          color="error"
-          icon="warning"
-          outline
-        >
-        ALERTA
-    </v-alert>-->
     <v-spacer></v-spacer>
     <br><br><br><br>
 
@@ -93,6 +85,8 @@ import fbase from '@/api/firebaseConfig.js'
 
       console.log("mostrameeee", this.user)
       this.$store.dispatch('TraerTrabajadorActual', this.user)
+      console.log('A VER SI EL TRABAJADORCITO ME TRAE DATO DEL USUARIO ENTERO O SOLO DE LOS TRABAJADORES: ', this.trabajadorcito[0])
+      
     },
     methods: {
       trabajadorActual(){

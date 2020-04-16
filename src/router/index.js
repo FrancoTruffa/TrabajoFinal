@@ -9,6 +9,7 @@ import Splash from '@/views/Splash'
 import Main from '@/views/Main'
 import MainTrabajador from '@/views/MainTrabajador'
 import PerfilTrabajador from '@/views/PerfilTrabajador'
+import PerfilTrabajadorPrueba from '@/views/PerfilTrabajadorPrueba'
 import PerfilCliente from '@/views/PerfilCliente'
 import VerTrabajador from '@/views/VerTrabajador'
 import Login from '@/views/Login'
@@ -28,6 +29,7 @@ import MercadoPago from '@/views/MercadoPago'
 import Transaccion from '@/views/Transaccion'
 import Administrador from '@/views/Administrador'
 import Denunciarcomentario from '@/views/Denunciarcomentario'
+import PerfilClienteAdmin from '@/views/PerfilClienteAdmin'
 
 
 Vue.use(Router)
@@ -148,6 +150,19 @@ const router  = new Router({
       ]
     },
     {
+      path: '/',
+      redirect: '/PerfilTrabajadorPrueba',
+      name: 'PerfilTrabajadorPrueba',
+      component: DefaultLayout,
+      children: [
+        {
+          path: 'perfilTrabajadorPrueba',
+          name: 'PerfilTrabajadorPrueba',
+          component: PerfilTrabajadorPrueba
+        }
+      ]
+    },
+    {
     path: '/',
     redirect: '/PerfilCliente',
     name: 'PerfilCliente',
@@ -170,6 +185,19 @@ const router  = new Router({
           path: 'verTrabajador/:id',
           name: 'VerTrabajador',
           component: VerTrabajador
+        }
+      ]
+    },
+    {
+      path: '/',
+      redirect: '/PerfilClienteAdmin',
+      name: 'PerfilClienteAdmin',
+      component: DefaultLayout,
+      children: [
+        {
+          path: 'perfilClienteAdmin/:id',
+          name: 'PerfilClienteAdmin',
+          component: PerfilClienteAdmin
         }
       ]
     },

@@ -12,7 +12,7 @@
           
           <template v-for="(item, index) in items">
             
-            <v-subheader v-if="item.header":key="item.header" inset >
+            <v-subheader v-if="item.header" :key="item.header" inset >
               {{ item.header }}
             </v-subheader>
 
