@@ -111,12 +111,12 @@
           </v-list-tile-content>
         </v-list-tile>
 
-        <v-list-tile v-on:click="denunciarComentario();drawer=false" v-if="categoria === 'trabajador' || categoria === 'Trabajador'">
+        <v-list-tile v-on:click="denunciarComentario();drawer=false" v-if="categoria === 'cliente' || categoria === 'Cliente'">
           <v-list-tile-action>
             <v-icon color="#01579B">fas fa-times-circle</v-icon> 
           </v-list-tile-action>
           <v-list-tile-content class="white--text">
-            <v-list-tile-title>Denunciar Comentario</v-list-tile-title>
+            <v-list-tile-title>Denunciar Trabajador</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
 

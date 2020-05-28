@@ -8,8 +8,7 @@
             max-width="600"  
           >
             <v-card-title>
-              <span class="title font-weight" style="color: #F5F5F5">Estimado usuario, si usted ve una irregularidad en los
-                 comentarios, por favor, haganoslo saber.</span>
+              <span class="title font-weight" style="color: #F5F5F5">Estimado usuario, si usted quiere realizar una denuncia, por favor, haganoslo saber.</span>
                  <br>
               <span class="title font-weight" style="color: #FFF59D">Usted puede notificarnos enviando un mail
                  a la siguiente direccion: </span>

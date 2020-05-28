@@ -236,18 +236,7 @@
         <v-card-actions class="pa-3">
          <v-btn fab small dark color="blue darken-3"  :to="'/VerTrabajador/' + t.id_autentificacion "><i class="fas fa-eye"></i></v-btn>
           <v-spacer></v-spacer> <v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer>
-           <v-btn 
-           color="red" 
-           dark
-           @click="denuncia = true;
-           id_trabajador = t.id_autentificacion;
-           nom_trabajador_denunciado = t.nombre;
-           ape_trabajador_denunciado = t.apellido"
-           >DENUNCIAR
-              <v-icon dark small right>block</v-icon>
-           </v-btn>
-
-          <v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer>
+      
            <v-btn
            :disabled="!((datoFecha.length > 0 && tiempoFecha.length > 0) && (datoFecha >= date) ||  (tiempoFecha > horita && datoFecha === date)) " 
              x-large dark
@@ -326,16 +315,7 @@
 </v-layout>
 
 
-<v-dialog v-model="denuncia" persistent>
-  <v-card>
-     <v-card-title class="headline"> ¿Usted realmente quiere denunciar a esta persona?</v-card-title>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-          <v-btn color="red darken-1" @click="denuncia = false">Cancelar</v-btn>
-          <v-btn color="blue darken-1" @click="denuncia=false; enviarDenuncia();">Si, deseo denunciar</v-btn>
-      </v-card-actions>
-    </v-card>
-</v-dialog>
+
 
 </v-container>
 

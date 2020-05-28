@@ -38,7 +38,7 @@
           </template>
         </v-list>
 
-          <v-dialog v-if="dialog.item" v-model="dialog.show" max-width="300">
+          <v-dialog v-if="dialog.item" v-model="dialog.show" max-width="300" >
            <v-card>
              <v-card-title small class="headline"> <v-icon>fa fa-user-check</v-icon>  --Calificación de:  </v-card-title>
     
@@ -62,6 +62,9 @@
                    <li> Recomendabilidad:<v-rating small readonly v-model="dialog.item.recomendacion" color="yellow accent-4" dense hover size="18" ></v-rating></li>
                    <li> Observación: {{dialog.item.observacion}}</li>
                    <v-btn
+                   style="color: #F08080" 
+                    small
+                    center
                    @click="enviarDenuncia()"
                    >DENUNCIAR</v-btn>
                 </ul>
@@ -73,6 +76,7 @@
             
           </v-card>
         </v-dialog>
+
 
         <!--<v-dialog v-model="denuncia" persistent>
         <v-card>
@@ -87,6 +91,21 @@
 
 
     </v-flex>
+
+    <v-snackbar
+              v-model="snackbar.show"
+              color="success"
+            >
+              {{ snackbar.texto }}
+              <v-btn
+                color="black"
+                flat
+                @click="snackbar.show = false"
+              >
+                Cerrar
+              </v-btn>
+    </v-snackbar>
+    
   </v-layout>
   
 </template>
@@ -104,6 +123,10 @@ export default {
       mostrarEvento: '',
       cargaEvento:'',
       },
+      snackbar:{
+        show: false,
+        texto: ''
+      }
   }),
   watch: {
   mostrarEvento: function (val) {
@@ -125,6 +148,12 @@ export default {
         nombre_cliente: this.dialog.item.cliente.nombre,
         apellido_cliente: this.dialog.item.cliente.apellido,
         comentario: this.dialog.item.observacion
+      }).then(result => {
+        //this.snackbar.color = "success"
+        this.snackbar.texto = "Enviaste la denuncia..."
+        this.snackbar.show = true
+        this.loading = false
+
       })
     },
   },

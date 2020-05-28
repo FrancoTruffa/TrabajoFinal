@@ -31,7 +31,7 @@
           </v-tab>
 
           <v-tab-item value="tab1">
-            <verContacto  :nombre="trabajador.nombre" :apellido="trabajador.apellido" :especialidad="trabajador.especialidad" :serviciosEsp="trabajador.serviciosEsp " :foto="trabajador.foto " ></verContacto>
+            <verContacto :email="trabajador.email" :nombre="trabajador.nombre" :apellido="trabajador.apellido" :especialidad="trabajador.especialidad" :serviciosEsp="trabajador.serviciosEsp " :foto="trabajador.foto " ></verContacto>
             <verComentarios :nombre="trabajador.rating" ></verComentarios>
           </v-tab-item>
 
@@ -50,8 +50,9 @@
       <v-spacer></v-spacer> <v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer><v-spacer></v-spacer>
            
            <v-btn 
-           color="red" 
+           style="color: #F08080" 
            dark
+           small
            @click="denuncia = true"
            >DENUNCIAR
               <v-icon dark small right>block</v-icon>
@@ -205,6 +206,7 @@
             <v-spacer></v-spacer>
             <v-btn color="red darken-1"  @click="denuncia = false">Cancelar</v-btn>
             <v-btn color="blue darken-1" @click="denuncia=false; enviarDenuncia()">Si, deseo denunciar</v-btn>
+            <v-text-field v-model="mensaje" label="escribe tu mensaje aqui"></v-text-field>
           </v-card-actions>
       </v-card>
     </v-dialog>
@@ -332,6 +334,12 @@ export default {
         apellido_trabajador_denunciado: this.trabajador.apellido,
         id_cliente: this.user.uid,
         nombre_cliente: this.user.displayName,
+      }).then(result => {
+        this.snackbar.color = "success"
+        this.snackbar.texto = "Enviaste la denuncia..."
+        this.snackbar.show = true
+        this.loading = false
+
       })
     },
   },
