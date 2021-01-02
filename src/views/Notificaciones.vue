@@ -457,6 +457,7 @@ export default {
       this.cargaNotificaciones();
       this.$store.dispatch('TraerTrabajadorActual', this.user);
       console.log("quiero ver trabajadorcitoooo: ", trabajadorcito);
+      console.log("QUIERO VER AL USER TESIS 2020: ", user);
 
     },
     methods: {

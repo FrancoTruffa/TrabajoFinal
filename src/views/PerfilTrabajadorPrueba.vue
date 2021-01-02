@@ -26,7 +26,12 @@
           </v-tab>
 
           <v-tab-item value="tab1">
-            <verContacto  :nombre="trabajadorcito[0].nombre" :apellido="trabajadorcito[0].apellido" :especialidad="trabajadorcito[0].especialidad" :serviciosEsp="trabajadorcito[0].serviciosEsp " :foto="trabajadorcito[0].foto " ></verContacto>
+            <verContacto  :nombre="trabajadorcito[0].nombre" 
+            :apellido="trabajadorcito[0].apellido" 
+            :especialidad="trabajadorcito[0].especialidad" 
+            :serviciosEsp="trabajadorcito[0].serviciosEsp " 
+            :foto="trabajadorcito[0].foto" 
+            :email="trabajadorcito[0].email"></verContacto>
             <!--<verComentarios :nombre="trabajadorcito[0].rating" ></verComentarios>-->
           </v-tab-item>
 
@@ -177,12 +182,17 @@ export default {
     trabajadorcito () {
          return this.$store.getters.getTrabajadorActual
     },
+    trabajadorcitoDOS () {
+         return this.$store.getters.getTrabajadorActual[0]
+    }
   },
 
 mounted: function () {
     this.$store.dispatch('cargarTrabajadorFiltro', this.$route.params.id);
     console.log('QUIERO VER USER: ', this.user);
     console.log('QUIERO VER TRABAJADORCITO BREEEEO: ', this.trabajadorcito);
+    console.log('QUIERO VER TRABAJADORCITO BREEEEO: ', this.trabajadorcitoDOS);
+    
   },
 };
 </script>

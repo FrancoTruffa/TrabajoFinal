@@ -142,7 +142,7 @@ let hoy = new Date()
       name:'editarHorarios',
       
     data: () => ({
-      type: 'month',
+      type: 'day',
       start: hoy.getFullYear() + '-' + (hoy.getMonth()+1) + '-' + hoy.getDate(),
       end: '2022-01-06',
       typeOptions: [

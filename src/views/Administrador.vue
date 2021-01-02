@@ -128,7 +128,7 @@
         <v-expansion-panel-content>
 
           <template v-slot:header>
-            <div>2020 | Ganancias: $250</div>
+            <div>2020 | Ganancias: $350</div>
           </template>
 
           <v-card>
@@ -148,8 +148,8 @@
               <div v-if="mes.nombre == 'Agosto'">{{ mes.nombre }} |  Cantidad: 0 - <i class="fas fa-dollar-sign"></i> 0</div>
               <div v-if="mes.nombre == 'Septiembre'">{{ mes.nombre }} |  Cantidad: 0 - <i class="fas fa-dollar-sign"></i> 0</div>
               <div v-if="mes.nombre == 'Octubre'">{{ mes.nombre }} |  Cantidad: 0 - <i class="fas fa-dollar-sign"></i> 0</div>
-              <div v-if="mes.nombre == 'Noviembre'">{{ mes.nombre }} |  Cantidad: 0 - <i class="fas fa-dollar-sign"></i> 0</div>
-              <div v-if="mes.nombre == 'Diciembre'">{{ mes.nombre }} |  Cantidad: 0 - <i class="fas fa-dollar-sign"></i> 0</div>
+              <div v-if="mes.nombre == 'Noviembre'">{{ mes.nombre }} |  Cantidad: 1 - <i class="fas fa-dollar-sign"></i> 50</div>
+              <div v-if="mes.nombre == 'Diciembre'">{{ mes.nombre }} |  Cantidad: 1 - <i class="fas fa-dollar-sign"></i> 50</div>
             </template>
             <v-card v-for="(pagos, index) in obtenerPagos" :key="index">
               <v-card-text v-if="pagos.fecha.substring(5,7) === String(mes.id) && pagos.fecha.substring(0,4) === '2020'">Nro Comprobante: {{pagos.comprobante}} - Año: {{pagos.fecha.substring(0,4)}}</v-card-text>
@@ -170,7 +170,7 @@
       
       <v-flex>
         <br>
-        <div style="text-align: center; font-size: 14px;">Ganancias Totales: $800</div>
+        <div style="text-align: center; font-size: 14px;">Ganancias Totales: $900</div>
       </v-flex>
 
 

@@ -86,7 +86,7 @@ import fbase from '@/api/firebaseConfig.js'
       console.log("mostrameeee", this.user)
       this.$store.dispatch('TraerTrabajadorActual', this.user)
       console.log('A VER SI EL TRABAJADORCITO ME TRAE DATO DEL USUARIO ENTERO O SOLO DE LOS TRABAJADORES: ', this.trabajadorcito[0])
-      
+      //window.location.reload()
     },
     methods: {
       trabajadorActual(){
